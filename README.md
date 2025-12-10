@@ -288,9 +288,7 @@ curl -X POST http://localhost:8080/api/users \
   "id": 1,
   "name": "Juan Pérez",
   "email": "juan@example.com",
-  "area": "Tecnología",
-  "createdAt": "2025-12-10T12:00:00",
-  "updatedAt": "2025-12-10T12:00:00"
+  "area": "Tecnología"
 }
 ```
 
