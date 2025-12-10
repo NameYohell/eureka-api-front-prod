@@ -1,0 +1,145 @@
+﻿<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-7">
+      
+      <!-- Alertas -->
+      <div *ngIf="showAlert" class="alert alert-dismissible fade show shadow-sm" 
+           [ngClass]="{'alert-success': alertType === 'success', 'alert-danger': alertType === 'error'}"
+           role="alert">
+        <div class="d-flex align-items-center">
+          <i class="bi fs-4 me-3" 
+             [ngClass]="{'bi-check-circle-fill': alertType === 'success', 'bi-exclamation-triangle-fill': alertType === 'error'}"></i>
+          <div class="flex-grow-1">
+            <h6 class="alert-heading mb-1">{{ alertType === 'success' ? '¡Operación Exitosa!' : '¡Error!' }}</h6>
+            <p class="mb-0">{{ alertMessage }}</p>
+          </div>
+          <button type="button" class="btn-close" (click)="closeAlert()" aria-label="Close"></button>
+        </div>
+      </div>
+
+      <!-- Card Principal -->
+      <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white py-4">
+          <h2 class="card-title mb-0 text-center">
+            <i class="bi bi-person-plus-fill me-2"></i>
+            Registro de Personal
+          </h2>
+        </div>
+        
+        <div class="card-body p-4">
+          <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+            
+            <!-- Nombre -->
+            <div class="mb-4">
+              <label for="name" class="form-label fw-semibold">
+                <i class="bi bi-person-fill text-primary me-2"></i>Nombre Completo
+                <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control form-control-lg" 
+                id="name"
+                name="name"
+                [(ngModel)]="user.name"
+                #nameField="ngModel"
+                required
+                minlength="2"
+                placeholder="Ingrese nombre completo"
+                [class.is-invalid]="nameField.invalid && (nameField.dirty || nameField.touched)">
+              <div class="invalid-feedback" *ngIf="nameField.invalid && (nameField.dirty || nameField.touched)">
+                <span *ngIf="nameField.errors?.['required']">El nombre es obligatorio</span>
+                <span *ngIf="nameField.errors?.['minlength']">El nombre debe tener al menos 2 caracteres</span>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-4">
+              <label for="email" class="form-label fw-semibold">
+                <i class="bi bi-envelope-fill text-primary me-2"></i>Correo Electrónico
+                <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="email" 
+                class="form-control form-control-lg" 
+                id="email"
+                name="email"
+                [(ngModel)]="user.email"
+                #emailField="ngModel"
+                required
+                email
+                placeholder="ejemplo@empresa.com"
+                [class.is-invalid]="emailField.invalid && (emailField.dirty || emailField.touched)">
+              <div class="invalid-feedback" *ngIf="emailField.invalid && (emailField.dirty || emailField.touched)">
+                <span *ngIf="emailField.errors?.['required']">El correo electrónico es obligatorio</span>
+                <span *ngIf="emailField.errors?.['email']">Ingrese un correo electrónico válido</span>
+              </div>
+              <div class="form-text">Este correo será el identificador único de la persona</div>
+            </div>
+
+            <!-- Área de Trabajo -->
+            <div class="mb-4">
+              <label for="area" class="form-label fw-semibold">
+                <i class="bi bi-briefcase-fill text-primary me-2"></i>Área de Trabajo
+                <span class="text-danger">*</span>
+              </label>
+              <select 
+                class="form-select form-select-lg" 
+                id="area"
+                name="area"
+                [(ngModel)]="user.area"
+                #areaField="ngModel"
+                required
+                [class.is-invalid]="areaField.invalid && (areaField.dirty || areaField.touched)">
+                <option value="" disabled selected>Seleccione un área</option>
+                <option value="Ventas">Ventas</option>
+                <option value="Recursos Humanos">Recursos Humanos</option>
+                <option value="Tecnología">Tecnología</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Finanzas">Finanzas</option>
+                <option value="Operaciones">Operaciones</option>
+                <option value="Administración">Administración</option>
+                <option value="Logística">Logística</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="areaField.invalid && (areaField.dirty || areaField.touched)">
+                Debe seleccionar un área de trabajo
+              </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="d-grid gap-2">
+              <button 
+                type="submit" 
+                class="btn btn-primary btn-lg"
+                [disabled]="isSubmitting">
+                <span *ngIf="!isSubmitting">
+                  <i class="bi bi-check-circle me-2"></i>Registrar Personal
+                </span>
+                <span *ngIf="isSubmitting">
+                  <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Registrando...
+                </span>
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-outline-secondary btn-lg"
+                (click)="resetForm(userForm)"
+                [disabled]="isSubmitting">
+                <i class="bi bi-arrow-counterclockwise me-2"></i>Limpiar Formulario
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- Footer del Card -->
+        <div class="card-footer bg-light text-center py-3">
+          <small class="text-muted">
+            <i class="bi bi-info-circle me-1"></i>
+            Todos los campos marcados con <span class="text-danger">*</span> son obligatorios
+          </small>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

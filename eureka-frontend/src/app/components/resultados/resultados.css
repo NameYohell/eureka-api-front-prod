@@ -1,0 +1,132 @@
+.table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(102, 126, 234, 0.1);
+  cursor: pointer;
+}
+
+.btn-outline-danger:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s;
+}
+
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+/* Gráfico de barras */
+.chart-container {
+  max-width: 100%;
+}
+
+.chart-bar-item {
+  animation: slideIn 0.5s ease-out;
+}
+
+.chart-bar {
+  width: 100%;
+  height: 40px;
+  background-color: #e9ecef;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.chart-bar-fill {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 1s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.chart-bar-fill.bg-success {
+  background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+}
+
+.chart-bar-fill.bg-info {
+  background: linear-gradient(90deg, #17a2b8 0%, #3498db 100%);
+}
+
+.chart-bar-fill.bg-primary {
+  background: linear-gradient(90deg, #007bff 0%, #667eea 100%);
+}
+
+.chart-bar-fill.bg-warning {
+  background: linear-gradient(90deg, #ffc107 0%, #ff9800 100%);
+}
+
+.chart-bar-fill.bg-danger {
+  background: linear-gradient(90deg, #dc3545 0%, #e74c3c 100%);
+}
+
+.chart-bar-fill.bg-secondary {
+  background: linear-gradient(90deg, #6c757d 0%, #95a5a6 100%);
+}
+
+.chart-bar-fill.bg-dark {
+  background: linear-gradient(90deg, #343a40 0%, #2c3e50 100%);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Tarjetas de resumen */
+.card-body i {
+  transition: transform 0.3s ease;
+}
+
+.card:hover i {
+  transform: scale(1.1);
+}
+
+.progress-bar {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.progress-bar-success {
+  background: linear-gradient(90deg, #28a745 0%, #20c997 100%) !important;
+}
+
+.progress-bar-info {
+  background: linear-gradient(90deg, #17a2b8 0%, #3498db 100%) !important;
+}
+
+.progress-bar-primary {
+  background: linear-gradient(90deg, #007bff 0%, #667eea 100%) !important;
+}
+
+.progress-bar-warning {
+  background: linear-gradient(90deg, #ffc107 0%, #ff9800 100%) !important;
+}
+
+.progress-bar-danger {
+  background: linear-gradient(90deg, #dc3545 0%, #e74c3c 100%) !important;
+}
+
+.progress-bar-secondary {
+  background: linear-gradient(90deg, #6c757d 0%, #95a5a6 100%) !important;
+}
+
+.progress-bar-dark {
+  background: linear-gradient(90deg, #343a40 0%, #2c3e50 100%) !important;
+}

@@ -1,0 +1,151 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-12">
+      
+      <!-- Header -->
+      <div class="mb-4">
+        <h2 class="mb-0">
+          <i class="bi bi-bar-chart-fill text-primary me-2"></i>
+          Estadísticas por Área
+        </h2>
+      </div>
+
+      <!-- Alerta -->
+      <div *ngIf="showAlert" class="alert alert-info alert-dismissible fade show" role="alert">
+        <i class="bi bi-info-circle-fill me-2"></i>{{ alertMessage }}
+        <button type="button" class="btn-close" (click)="showAlert = false"></button>
+      </div>
+
+      <!-- Loading -->
+      <div *ngIf="loading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-3 text-muted">Cargando datos...</p>
+      </div>
+
+      <!-- Sin datos -->
+      <div *ngIf="!loading && users.length === 0" class="text-center py-5">
+        <i class="bi bi-inbox display-1 text-muted"></i>
+        <h5 class="mt-3 text-muted">No hay personal registrado</h5>
+        <p class="text-muted">Registra personal para ver las estadísticas</p>
+        <a routerLink="/registro" class="btn btn-primary mt-3">
+          <i class="bi bi-plus-circle me-2"></i>Registrar Personal
+        </a>
+      </div>
+
+      <!-- Estadísticas -->
+      <div *ngIf="!loading && users.length > 0">
+        
+        <!-- Resumen General -->
+        <div class="row mb-4">
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="bi bi-people-fill display-4 text-primary mb-2"></i>
+                <h3 class="mb-0">{{ users.length }}</h3>
+                <p class="text-muted mb-0">Total Personal</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="bi bi-check-circle-fill display-4 text-success mb-2"></i>
+                <h3 class="mb-0">{{ getActiveUsersCount() }}</h3>
+                <p class="text-muted mb-0">Activos</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="bi bi-building display-4 text-info mb-2"></i>
+                <h3 class="mb-0">{{ areaStats.length }}</h3>
+                <p class="text-muted mb-0">Áreas</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabla por Área -->
+        <div class="card shadow-lg border-0 mb-4">
+          <div class="card-header bg-primary text-white py-3">
+            <h5 class="mb-0">
+              <i class="bi bi-table me-2"></i>
+              Personal por Área
+            </h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col" class="px-4 py-3">Área</th>
+                    <th scope="col" class="py-3 text-center">Cantidad</th>
+                    <th scope="col" class="py-3">Porcentaje</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let stat of areaStats">
+                    <td class="px-4 py-3">
+                      <span class="badge" [ngClass]="getBadgeClass(stat.area)">
+                        <i class="bi bi-briefcase-fill me-1"></i>
+                        {{ stat.area }}
+                      </span>
+                    </td>
+                    <td class="py-3 text-center">
+                      <span class="badge bg-secondary fs-6">{{ stat.count }}</span>
+                    </td>
+                    <td class="py-3">
+                      <div class="d-flex align-items-center">
+                        <div class="progress flex-grow-1" style="height: 25px;">
+                          <div 
+                            class="progress-bar progress-bar-striped progress-bar-animated"
+                            [ngClass]="getBadgeClass(stat.area).replace('bg-', 'progress-bar-')"
+                            [style.width.%]="stat.percentage"
+                            role="progressbar">
+                            {{ stat.percentage | number:'1.1-1' }}%
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gráfico de Barras -->
+        <div class="card shadow-lg border-0">
+          <div class="card-header bg-primary text-white py-3">
+            <h5 class="mb-0">
+              <i class="bi bi-bar-chart-line me-2"></i>
+              Distribución de Personal por Área
+            </h5>
+          </div>
+          <div class="card-body p-4">
+            <div class="chart-container">
+              <div *ngFor="let stat of areaStats" class="chart-bar-item mb-3">
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="fw-semibold">{{ stat.area }}</span>
+                  <span class="badge" [ngClass]="getBadgeClass(stat.area)">{{ stat.count }}</span>
+                </div>
+                <div class="chart-bar">
+                  <div 
+                    class="chart-bar-fill"
+                    [ngClass]="getBadgeClass(stat.area)"
+                    [style.width.%]="stat.percentage">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
